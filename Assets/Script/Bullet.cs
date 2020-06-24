@@ -10,7 +10,7 @@ public class Bullet : MonoBehaviour
     public float speed;
     SpriteRenderer characterRenderer;
     SpriteRenderer bulletRenderer;
-    bool rotation = true;
+    Rigidbody2D rigid;
 
 
     void Start()
@@ -23,6 +23,7 @@ public class Bullet : MonoBehaviour
         GameObject character = GameObject.Find("Character");
         characterRenderer = character.GetComponent<SpriteRenderer>();
         bulletRenderer = GetComponent<SpriteRenderer>();
+        rigid = GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -34,13 +35,13 @@ public class Bullet : MonoBehaviour
         }
         if (characterRenderer.flipX == false)
         {
-                bulletRenderer.flipX = false;
-                transform.Translate(transform.right * speed * Time.deltaTime);
+            bulletRenderer.flipX = false;
+            rigid.AddForce(Vector2.right * speed, ForceMode2D.Impulse);
         }
         else if (characterRenderer.flipX == true)
         {
-                bulletRenderer.flipX = true;
-                transform.Translate(transform.right * -1 * speed * Time.deltaTime);
+            bulletRenderer.flipX = true;
+            rigid.AddForce(Vector2.right * -1 * speed, ForceMode2D.Impulse);
         }
     }
 

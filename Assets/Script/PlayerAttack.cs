@@ -9,7 +9,9 @@ public class PlayerAttack : MonoBehaviour
     public Transform pos;
     public float cooltime;
     private float curtime;
+    public float delay;
     Animator animator;
+    SpriteRenderer spriteRenderer;
 
     void Start()
     {
@@ -19,6 +21,7 @@ public class PlayerAttack : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -28,6 +31,7 @@ public class PlayerAttack : MonoBehaviour
             if (Input.GetKey(KeyCode.Z))
             {
                 animator.SetBool("IsAttacking", true);
+                delay = cooltime;
                 Instantiate(bullet, pos.position, transform.rotation);
             }
             else
