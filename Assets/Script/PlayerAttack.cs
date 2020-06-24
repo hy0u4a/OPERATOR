@@ -12,6 +12,7 @@ public class PlayerAttack : MonoBehaviour
     public float delay;
     Animator animator;
     SpriteRenderer spriteRenderer;
+    Rigidbody2D rigid;
 
     void Start()
     {
@@ -20,8 +21,10 @@ public class PlayerAttack : MonoBehaviour
 
     void Awake()
     {
+        GameObject character = GameObject.Find("Character");
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        rigid = character.GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -31,6 +34,7 @@ public class PlayerAttack : MonoBehaviour
             if (Input.GetKey(KeyCode.Z))
             {
                 animator.SetBool("IsAttacking", true);
+               // animator.SetBool("IsJumpAttacking", true);
                 delay = cooltime;
                 Instantiate(bullet, pos.position, transform.rotation);
             }
@@ -38,6 +42,7 @@ public class PlayerAttack : MonoBehaviour
             {
                 if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
                 {
+                    animator.SetBool("IsJumpAttacking", false);
                     animator.SetBool("IsAttacking", false);
                 }
             }
